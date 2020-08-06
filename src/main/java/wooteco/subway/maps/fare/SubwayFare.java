@@ -19,10 +19,10 @@ public class SubwayFare {
             return DEFAULT_FARE + plusFare;
         }
         if (distance <= 50) {
-            plusFare = (distance / 5) * 100;
+            plusFare = (int) ((Math.ceil((distance - 1) / 5) + 1) * 100);
             return DEFAULT_FARE + plusFare;
         }
-        plusFare = (distance / 8) * 100;
+        plusFare = (int) ((Math.ceil((distance - 1) / 8) + 1) * 100);
         return DEFAULT_FARE + plusFare;
     }
 }
