@@ -1,6 +1,6 @@
-package wooteco.subway.fare.acceptance;
+package wooteco.subway.maps.fare.acceptance;
 
-import static wooteco.subway.fare.acceptance.step.FareAcceptanceStep.적절한_요금을_응답;
+import static wooteco.subway.maps.fare.acceptance.step.FareAcceptanceStep.적절한_요금을_응답;
 import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.지하철_노선에_지하철역_등록되어_있음;
 import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.거리_경로_조회_요청;
 import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.적절한_경로를_응답;

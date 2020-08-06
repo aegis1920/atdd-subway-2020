@@ -1,4 +1,4 @@
-package wooteco.subway.fare.acceptance.step;
+package wooteco.subway.maps.fare.acceptance.step;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
