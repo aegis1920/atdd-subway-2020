@@ -2,6 +2,7 @@ package wooteco.subway.maps.fare.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static wooteco.subway.maps.fare.acceptance.FareAcceptanceTest.TEST_AGE;
 
 import com.google.common.collect.Lists;
 import java.util.HashMap;
@@ -73,12 +74,10 @@ public class SubwayFareTest extends AcceptanceTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
     void down0SubwayFareTest(int inputDistance) {
-        System.out.println("hihi" + subwayPath.extractLineEdgeIds().toString());
-
         List<LineResponse> lineResponses = lineService
             .findEdgeLineResponses(subwayPath.extractLineEdgeIds());
 
-        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses);
+        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses, TEST_AGE);
 
         assertThatThrownBy(subwayFare::calculateSubwayFare)
             .isInstanceOf(IllegalArgumentException.class);
@@ -91,7 +90,7 @@ public class SubwayFareTest extends AcceptanceTest {
         List<LineResponse> lineResponses = lineService
             .findEdgeLineResponses(subwayPath.extractLineEdgeIds());
 
-        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses);
+        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses, TEST_AGE);
 
         assertThat(subwayFare.calculateSubwayFare()).isEqualTo(2150L);
     }
@@ -103,7 +102,7 @@ public class SubwayFareTest extends AcceptanceTest {
         List<LineResponse> lineResponses = lineService
             .findEdgeLineResponses(subwayPath.extractLineEdgeIds());
 
-        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses);
+        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses, TEST_AGE);
 
         assertThat(subwayFare.calculateSubwayFare()).isEqualTo(expectedFare);
     }
@@ -115,7 +114,7 @@ public class SubwayFareTest extends AcceptanceTest {
         List<LineResponse> lineResponses = lineService
             .findEdgeLineResponses(subwayPath.extractLineEdgeIds());
 
-        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses);
+        SubwayFare subwayFare = new SubwayFare(inputDistance, lineResponses, TEST_AGE);
 
         assertThat(subwayFare.calculateSubwayFare()).isEqualTo(expectedFare);
     }

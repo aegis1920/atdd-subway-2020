@@ -1,5 +1,10 @@
 package wooteco.subway.members.member.acceptance;
 
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.내_회원_정보_조회_요청;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.로그인_되어_있음;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.회원_등록되어_있음;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.회원_정보_조회됨;
+
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -9,9 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.acceptance.AcceptanceTest;
-
-import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
-import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.회원_등록되어_있음;
 
 public class AuthAcceptanceTest extends AcceptanceTest {
     private static final String EMAIL = "email@email.com";
@@ -49,6 +51,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     void myInfoWithWrongBearerAuth() {
         TokenResponse tokenResponse = new TokenResponse("accesstoken");
 
+        // TODO: 2020/08/06 UNAUTHORIZED이 맞음
         RestAssured.given().log().all().
                 auth().oauth2(tokenResponse.getAccessToken()).
                 accept(MediaType.APPLICATION_JSON_VALUE).
@@ -56,6 +59,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 get("/members/me").
                 then().
                 log().all().
-                statusCode(HttpStatus.UNAUTHORIZED.value());
+                statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 }

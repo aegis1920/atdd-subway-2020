@@ -5,8 +5,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static wooteco.subway.maps.fare.acceptance.FareAcceptanceTest.TEST_AGE;
 
 import com.google.common.collect.Lists;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import wooteco.subway.common.TestObjectUtils;
 import wooteco.subway.maps.line.application.LineService;
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.domain.LineStation;
+import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.map.domain.LineStationEdge;
 import wooteco.subway.maps.map.domain.PathType;
 import wooteco.subway.maps.map.domain.SubwayPath;
@@ -79,11 +82,14 @@ public class MapServiceTest {
 
     @Test
     void findPath() {
+        List<LineResponse> lineResponses = Arrays.asList(new LineResponse(), new LineResponse());
+
         when(lineService.findLines()).thenReturn(lines);
         when(pathService.findPath(anyList(), anyLong(), anyLong(), any())).thenReturn(subwayPath);
         when(stationService.findStationsByIds(anyList())).thenReturn(stations);
+        when(lineService.findEdgeLineResponses(anyList())).thenReturn(lineResponses);
 
-        PathResponse pathResponse = mapService.findPath(1L, 3L, PathType.DISTANCE);
+        PathResponse pathResponse = mapService.findPath(TEST_AGE,1L, 3L, PathType.DISTANCE);
 
         assertThat(pathResponse.getStations()).isNotEmpty();
         assertThat(pathResponse.getDuration()).isNotZero();

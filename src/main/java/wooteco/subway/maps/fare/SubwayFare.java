@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import wooteco.subway.maps.line.dto.LineResponse;
+import wooteco.subway.members.member.domain.Person;
 
 public class SubwayFare {
 
@@ -11,15 +12,23 @@ public class SubwayFare {
 
     private final int distance;
     private final List<LineResponse> lineResponses;
+    private final int loginMemberAge;
 
-    public SubwayFare(int distance, List<LineResponse> lineResponses) {
+    public SubwayFare(int distance, List<LineResponse> lineResponses,
+        int loginMemberAge) {
         this.distance = distance;
         this.lineResponses = lineResponses;
+        this.loginMemberAge = loginMemberAge;
     }
 
-    public Long calculateSubwayFare() {
+    public long calculateSubwayFare() {
+        final long totalFare = Math.round(getFare());
+        return Person.calculate(totalFare, loginMemberAge);
+    }
+
+    private double getFare() {
         int fareByDistance = 0;
-        int fareByLine = calculatePlusSubwayFare();
+        int fareByLine = getMaxExtraFare();
 
         if (distance <= 0) {
             throw new IllegalArgumentException(distance + " 거리는 요금 체계에 해당하지 않는 거리입니다!");
@@ -35,12 +44,12 @@ public class SubwayFare {
         return DEFAULT_FARE + fareByDistance + fareByLine;
     }
 
-    private int calculatePlusSubwayFare() {
-        List<Integer> fares = lineResponses.stream()
+    private int getMaxExtraFare() {
+        List<Integer> extraFares = lineResponses.stream()
             .map(LineResponse::getExtraFare)
             .collect(Collectors.toList());
 
-        return fares.stream()
+        return extraFares.stream()
             .max(Comparator.comparingInt(o -> o))
             .orElseThrow(IllegalAccessError::new);
     }

@@ -5,7 +5,8 @@ import java.util.function.Predicate;
 
 public enum Person {
     CHILD(age -> age >= 6 && age < 13, 350, 0.5),
-    YOUTH(age -> age >= 13 && age < 19,350, 0.8);
+    YOUTH(age -> age >= 13 && age < 19, 350, 0.8),
+    NONE(age -> true, 0, 1);
 
     private final Predicate<Integer> age;
     private final int deduction;
@@ -17,10 +18,10 @@ public enum Person {
         this.discount = discount;
     }
 
-    public static int calculate(int fare, int age) {
+    public static long calculate(long fare, int age) {
         Person person = findPerson(age);
         fare -= person.deduction;
-        return (int) (fare * person.discount);
+        return (long) (fare * person.discount);
     }
 
     private static Person findPerson(int age) {
