@@ -22,7 +22,16 @@ public class SubwayFareTest {
     @DisplayName("이용 거리초과 시 추가운임(10km초과 ∼ 50km까지)일 경우 지하철 요금")
     @ParameterizedTest
     @CsvSource({"11,1450", "50,2250"})
-    void overSubwayFareTest(int inputDistance, Long expectedFare) {
+    void between10to50SubwayFareTest(int inputDistance, Long expectedFare) {
+        SubwayFare subwayFare = new SubwayFare(inputDistance);
+
+        assertThat(subwayFare.calculateSubwayFareByDistance()).isEqualTo(expectedFare);
+    }
+
+    @DisplayName("이용 거리초과 시 추가운임(50km초과)일 경우 지하철 요금")
+    @ParameterizedTest
+    @CsvSource({"53,1850", "100,2450"})
+    void over50SubwayFareTest(int inputDistance, Long expectedFare) {
         SubwayFare subwayFare = new SubwayFare(inputDistance);
 
         assertThat(subwayFare.calculateSubwayFareByDistance()).isEqualTo(expectedFare);

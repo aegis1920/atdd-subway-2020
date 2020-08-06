@@ -13,7 +13,6 @@ public class SubwayFare {
 
     public Long calculateSubwayFareByDistance() {
         int plusFare = 0;
-
         if (distance <= 10) {
             return DEFAULT_FARE + plusFare;
         }
@@ -21,7 +20,7 @@ public class SubwayFare {
             plusFare = (distance / 5) * 100;
             return DEFAULT_FARE + plusFare;
         }
-
-        throw new IllegalArgumentException(distance + " 거리는 요금 체계에 해당하지 않는 거리입니다!");
+        plusFare = (distance / 8) * 100;
+        return DEFAULT_FARE + plusFare;
     }
 }
