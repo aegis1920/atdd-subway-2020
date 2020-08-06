@@ -22,6 +22,7 @@ import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
 
 public class LineServiceTest {
+
     private Map<Long, Station> stations;
     private Line line;
 
@@ -30,7 +31,7 @@ public class LineServiceTest {
         Station station1 = TestObjectUtils.createStation(1L, "강남역");
         Station station2 = TestObjectUtils.createStation(2L, "역삼역");
         stations = Lists.newArrayList(station1, station2).stream()
-                .collect(Collectors.toMap(Station::getId, Function.identity()));
+            .collect(Collectors.toMap(Station::getId, Function.identity()));
 
         line = TestObjectUtils.createLine(1L, "신분당선", "RED", 900);
         line.addLineStation(new LineStation(1L, null, 10, 10));
